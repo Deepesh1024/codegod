@@ -1,5 +1,5 @@
 import streamlit as st
-from mainbot import generate_questions, generate_answers, generate_convo, check_code
+from mainbot import generate_questions, generate_answers, generate_convo, check_code, test_case
 
 # Initialize the session state for page if not already set
 if 'page' not in st.session_state:
@@ -9,7 +9,7 @@ if 'page' not in st.session_state:
 st.title("The Shikshak App")
 st.markdown("Explore questions and answers generation tailored to different topics and difficulty levels.")
 st.sidebar.title("Navigation")
-st.session_state.page = st.sidebar.radio("Choose a page:", ["Home", "Generate Questions", "Generate Answers", "Code Ground"])
+st.session_state.page = st.sidebar.radio("Choose a page:", ["Home", "Generate Questions", "Generate Answers", "Code Ground", "Test Cases"])
 
 # Define the Generate Questions Page
 if st.session_state.page == "Generate Questions":
@@ -30,7 +30,7 @@ if st.session_state.page == "Generate Questions":
             questions = generate_questions(topic, difficulty)
             st.write(f"### Here are your questions on **{topic}** (Difficulty: **{difficulty}**)")
             for idx, question in questions.items():
-                st.write(f"{idx}. {question}")
+                st.write(f"{idx}: {question}")
         else:
             st.warning("Please enter a topic before generating questions.")
 
@@ -56,7 +56,6 @@ elif st.session_state.page == "Generate Answers":
         else:
             st.warning("Please enter a question before generating an answer.")
 
-# Define the Code Ground Page
 # Define the Code Ground Page
 elif st.session_state.page == "Code Ground":
     st.markdown("### 🖥️ Code Ground")
@@ -85,6 +84,32 @@ elif st.session_state.page == "Code Ground":
         else:
             st.warning("Please enter some code to check.")
 
+# Define the Test Cases Page
+elif st.session_state.page == "Test Cases":
+    st.markdown("### 🧪 Test Case Generator")
+    st.write("Generate input-output test cases for a coding question.")
+    
+    # Input field for the question
+    question_input = st.text_input("Enter the coding question:", placeholder="e.g., Implement a stack using arrays.")
+
+    # Generate Test Cases button
+    if st.button("Generate Test Cases"):
+        if question_input:
+            cases = test_case(question_input)  # Call the function
+            st.write(f"### Test Cases for: **{question_input}**")
+            
+            # Display the raw output for debugging
+            st.write("Raw Output from LLM:")
+            st.write(cases)  # Debugging: print the raw output
+
+            if cases.get("Error"):
+                st.warning("No test cases were generated. Try refining the question or use simpler phrasing.")
+            else:
+                st.write("### Generated Test Cases:")
+                for inp, out in cases.items():
+                    st.write(f"Input: {inp} | Output: {out}")
+        else:
+            st.warning("Please enter a coding question before generating test cases.")
 
 # Define the Home Page
 else:

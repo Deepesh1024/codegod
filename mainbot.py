@@ -20,6 +20,17 @@ prompt4 = ChatPromptTemplate.from_messages([
     ("system", "You are a computer science assistant professor. Check the code {code} given to you be the user is correct or not.")
 ]
 )
+prompt5 = ChatPromptTemplate.from_messages([
+    ("system", "Create exactly 10 unique test cases for this coding question: {question}. Each test case should be formatted as follows:\n\n"
+               "Input: <array of integers>, Target: <target integer> | Output: <indices or values that satisfy the condition>\n\n"
+               "Example test case:\n"
+               "Input: [1, 2, 3, 4], Target: 5 | Output: [0, 3]\n"
+               "Input: [3, 6, 8, 12], Target: 14 | Output: [0, 2]\n\n"
+               "Return only the 10 test cases without extra text.")
+])
+
+
+
 def generate_answers(question, difficulty): 
     formatted_prompt = prompt2.format_prompt(question=question, difficulty=difficulty)
     llm = Ollama(model="llama3:8b")
@@ -45,3 +56,24 @@ def check_code(code):
     llm = Ollama(model="llama3:8b")
     review = llm.invoke(formatted_prompt.to_messages())
     return review
+def test_case(question):
+    formatted_prompt = prompt5.format_prompt(question=question)
+    llm = Ollama(model="llama3:8b")
+    response = llm.invoke(formatted_prompt.to_messages())
+    response_text = ''.join(response) if isinstance(response, list) else response
+    print("Debug - Raw LLM Response:", response_text)  # Debugging print
+    test_cases = {}
+    lines = response_text.splitlines()  # Split response by line
+    for line in lines:
+        if "Input:" in line and "Output:" in line:
+            try:
+                input_part = line.split("Input:")[1].split("|")[0].strip()
+                output_part = line.split("Output:")[1].strip()
+                test_cases[input_part] = output_part
+            except IndexError:
+                continue
+    if not test_cases:
+        test_cases["Error"] = "No test cases generated. Adjust prompt or try different phrasing."
+    return test_cases
+
+
