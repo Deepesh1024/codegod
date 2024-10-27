@@ -6,7 +6,8 @@ if 'page' not in st.session_state:
 
 st.title("The Shikshak App")
 st.markdown("Explore questions and answers generation tailored to different topics and difficulty levels.")
-st.sidebar.title("Navigation")
+
+st.sidebar.title("Side Bar 2 Hell")
 st.session_state.page = st.sidebar.radio("Choose a page:", ["Home", "Generate Questions", "Generate Answers", "Code Ground", "Test Cases"])
 
 if st.session_state.page == "Generate Questions":
