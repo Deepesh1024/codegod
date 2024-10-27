@@ -1,21 +1,12 @@
 import streamlit as st
 from mainbot import generate_questions, generate_answers, generate_convo
-
-# Initialize session state for page navigation
 if 'page' not in st.session_state:
     st.session_state.page = "Main"
-
-# Set up the main page title
 st.title("The Shikshak App")
 st.markdown("Explore questions and answers generation tailored to different topics and difficulty levels.")
-
-# Sidebar navigation
 st.sidebar.title("SIDE BAR TO HELL")
 st.session_state.page = st.sidebar.radio("Choose a page:", ["Home", "Generate Questions", "Generate Answers"])
-
-# Display the selected page
 if st.session_state.page == "Generate Questions":
-    # Question Generator Page
     st.markdown("### 📝 Question Generator")
     st.write("Generate customized questions based on a topic and difficulty level.")
     with st.container():
@@ -32,9 +23,7 @@ if st.session_state.page == "Generate Questions":
                 st.write(f"{idx}. {question}")
         else:
             st.warning("Please enter a topic before generating questions.")
-
 elif st.session_state.page == "Generate Answers":
-    # Answer Generator Page
     st.markdown("### 🧩 Answer Generator")
     st.write("Get answers for specific questions based on your topic and difficulty level.")
     with st.container():
@@ -50,22 +39,15 @@ elif st.session_state.page == "Generate Answers":
             st.write(solution)
         else:
             st.warning("Please enter a question before generating an answer.")
-
 else:
-    # Home Page
     st.write("### HI!! Use the text box below to talk to me")
-    
-    # Add a text input for user to enter their query
     user_input = st.text_input("Enter your message:", placeholder="Type your question or message here...")
 
     if st.button("Submit"):
         if user_input:
-            # Call the generate_convo function with the user input
             response = generate_convo(user_input)
             st.write(f"### Response:")
             st.write(response)
         else:
             st.warning("Please enter a message before submitting.")
-
-    # Set the width of the image while maintaining the aspect ratio
     st.image("/Users/deepeshjha/Desktop/codespace/Screenshot 2024-10-27 at 3.12.46 PM.png", use_column_width=False, width=250)
