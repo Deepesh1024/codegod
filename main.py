@@ -107,4 +107,4 @@ else:
         else:
             st.warning("Please enter a message before submitting.")
     
-    st.image("/Users/deepeshjha/Desktop/codespace/Screenshot 2024-10-27 at 3.12.46 PM.png", use_column_width=False, width=250)
+    st.image("Screenshot 2024-10-27 at 3.12.46 PM.png", use_column_width=False, width=250)
