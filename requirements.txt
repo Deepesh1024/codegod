@@ -8,3 +8,4 @@ tenacity==8.3.0
 requests-toolbelt==0.9.1
 urllib3==1.26.15
 PyMuPDF
+gTTS

@@ -10,12 +10,16 @@ prompt = ChatPromptTemplate.from_messages([
 ])
 
 prompt2 = ChatPromptTemplate.from_messages([
-    ("system", "Generate the solution for the coding question in C language. Question: {question}. Difficulty level: {difficulty}.")
+    ("system", "Generate the solution for the coding question in C language. Question: {question}. Difficulty level: {difficulty} and also explain the code by taking small code snippets and code examples and real life examples.")
 ])
 
 prompt3 = ChatPromptTemplate.from_messages([
     ("system", "You are a computer science assistant professor. Reply to all the student education related queries {query}.")
 ])
+prompt4 = ChatPromptTemplate.from_messages([
+    ("system", "You are a computer science assistant professor. Check the code {code} given to you be the user is correct or not.")
+]
+)
 def generate_answers(question, difficulty): 
     formatted_prompt = prompt2.format_prompt(question=question, difficulty=difficulty)
     llm = Ollama(model="llama3:8b")
@@ -36,3 +40,8 @@ def generate_convo(query):
     llm = Ollama(model="llama3:8b")
     reply = llm.invoke(formatted_prompt.to_messages())
     return reply
+def check_code(code):
+    formatted_prompt = prompt4.format_prompt(code=code)
+    llm = Ollama(model="llama3:8b")
+    review = llm.invoke(formatted_prompt.to_messages())
+    return review
