@@ -28,9 +28,6 @@ prompt5 = ChatPromptTemplate.from_messages([
                "Input: [3, 6, 8, 12], Target: 14 | Output: [0, 2]\n\n"
                "Return only the 10 test cases without extra text.")
 ])
-
-
-
 def generate_answers(question, difficulty): 
     formatted_prompt = prompt2.format_prompt(question=question, difficulty=difficulty)
     llm = Ollama(model="llama3:8b")
