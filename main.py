@@ -4,7 +4,7 @@ from mainbot import generate_questions, generate_answers, generate_convo, check_
 if 'page' not in st.session_state:
     st.session_state.page = "Main"
 
-st.title("The Shikshak App")
+st.title("__The Shikshak App__")
 st.markdown("Explore questions and answers generation tailored to different topics and difficulty levels.")
 
 st.sidebar.title("Side Bar 2 Hell")
