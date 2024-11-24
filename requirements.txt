@@ -11,3 +11,4 @@ streamlit
 PyMuPDF
 langchain 
 langchain-community
+langchain_groq
