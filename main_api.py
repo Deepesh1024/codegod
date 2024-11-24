@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import logging
 import uvicorn
 import os
+from langchain_groq import ChatGroq
 
 # Load environment variables
 load_dotenv()
@@ -22,7 +23,7 @@ app = FastAPI(
 )
 
 # Initialize the Ollama model
-llm = Ollama(model="llama3:8b")
+llm = ChatGroq(model = "llama3.1-70b-versatile", api_key ="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")
 
 # Define prompts
 prompts = {
